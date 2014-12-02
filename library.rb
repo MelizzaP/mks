@@ -53,7 +53,8 @@ class Library
 
   def check_out_book(book_id, borrower)
     selected_book = @books.find {|book| book.id == book_id}
-    if selected_book.check_out
+    borrower_count = @books.select {|book| book.borrower == borrower}
+    if selected_book.check_out && borrower_count.length < 2
       selected_book.borrower = borrower
       selected_book
     end
