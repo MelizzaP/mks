@@ -185,9 +185,9 @@ describe Library do
     expect(lib.available_books.count).to eq(2)
   end
 
-  xit "after a book it returned, it can be checked out again" do
-    lib = Library.new
-    lib.register_new_book("Harry Potter", "J. K. Rowling")
+  it "after a book it returned, it can be checked out again" do
+    lib = Library.new("My Library")
+    lib.add_book("Harry Potter", "J. K. Rowling")
     book_id = lib.books.first.id
 
     # First, we check out the book
@@ -204,17 +204,17 @@ describe Library do
     expect( lib.get_borrower(book_id) ).to eq 'Michael Schumacher'
   end
 
-  xit "returns borrowed books" do
-    lib = Library.new
-    lib.register_new_book("Eloquent JavaScript", "Marijn Haverbeke")
-    lib.register_new_book("Essential JavaScript Design Patterns", "Addy Osmani")
-    lib.register_new_book("JavaScript: The Good Parts", "Douglas Crockford")
-
+  it "returns borrowed books" do
+    lib = Library.new("My Library")
+    lib.add_book("Eloquent JavaScript", "Marijn Haverbeke")
+    lib.add_book("Essential JavaScript Design Patterns", "Addy Osmani")
+    lib.add_book("JavaScript: The Good Parts", "Douglas Crockford")
+    book_id = lib.books.first.id
     # At first, no books are checked out
     expect(lib.borrowed_books.count).to eq(0)
 
     kors = Borrower.new("Michael Kors")
-    book = lib.check_out_book(lib.borrowed_books.first.id, kors)
+    book = lib.check_out_book(book_id, kors)
 
     # But now there should be one checked out book
     expect(lib.borrowed_books.count).to eq(1)
