@@ -28,7 +28,7 @@ class Book
   
 end
 
-class Borrower
+class Borrower 
   attr_reader :name
   
   def initialize(name)
